@@ -1,12 +1,50 @@
 {% extends "base.html" %}
 {% block content %}
+<hr />
+    {# Вот так мы делаем если один ко многим, то у один пользователь у него есть набор твитов можно обращаться пользователь.набор_твитов.all #}
+    {% for tweet in user.tweet_set.all %}
+        {{ tweet.text }}
+    {% endfor %}
+<hr />
+
+
+<div class="col-md-12 column">
+    {# Такая вот ссылка значит, что к текущему УРЛ добаввиться post т.е полный будет server/user/feofs/post #}
+    <form method="post" action="post/">
+        {% csrf_token %}
+        <div class="col-md-8 col-md-offset-2 fieldWrapper">
+        {{ form.text.errors }}
+
+        {{ form.text }}
+        </div>
+            {{ form.country.as_hidden }}
+        <div>
+        <input type="submit">
+        </div>
+    </form>
+</div>
+<h3> </h3>
+
+
 <div class="row clearfix">
 	<div class="col-md-12 column">
+
 	{% for tweet in tweets %}
 		<div class="well">
 		<span>{{ tweet.text }}</span>
 		</div>
+        {# Вот так посредствоам множества выводяться из отношений многие ко многим и также 1 ко многим  #}
+        {% for tag in tweet.hashtag_set.all %}
+        <div class="well">
+            #{{ tag.name }}
+        </div>
+        {% endfor %}
 	{% endfor %}
 	</div>
+
 </div>
+<h3>Теги с именем Ella</h3>
+{% for ella_tweet in ella_tweets %}
+    {{ ella_tweet }}
+{% endfor %}
 {% endblock %}

@@ -20,4 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', Index.as_view()),
     re_path('user/(\w+)/$',Profile.as_view()),
+    re_path('user/(\w+)/post/$',PostTweet.as_view()),
+    re_path('hashtag/(\w+)/$',HashTagCloud.as_view()),
 ]
